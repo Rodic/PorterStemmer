@@ -1,4 +1,4 @@
- # Scala implementation of Porter's Stemmer
+ # Scala implementation of the Porter's Stemmer Algorithm
 
 Algo is implemented in functional style (lists, pattern matching and minimal usage of regex)
 
