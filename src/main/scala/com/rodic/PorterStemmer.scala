@@ -108,21 +108,21 @@ object PorterStemmer {
   }
 
   def step3(cs: List[Char]): List[Char] = {
-    def aux(cs: List[Char], checked: List[Char]): List[Char] = {
-      lazy val m = calcM(checked)
+    def aux(cs: List[Char], m: Boolean, checked: List[Char]): List[Char] = {
       cs match {
         case Nil                          => Nil
-        case 'i'::'c'::'a'::'t'::'e'::Nil => if (m > 0) 'i'::'c'::Nil else cs
-        case 'a'::'t'::'i'::'v'::'e'::Nil => if (m > 0) Nil else cs
-        case 'a'::'l'::'i'::'z'::'e'::Nil => if (m > 0) 'a'::'l'::Nil else cs
+        case 'i'::'c'::'a'::'t'::'e'::Nil => if (m) 'i'::'c'::Nil else cs
+        case 'a'::'t'::'i'::'v'::'e'::Nil => if (m) Nil else cs
+        case 'a'::'l'::'i'::'z'::'e'::Nil => if (m) 'a'::'l'::Nil else cs
         case 'i'::'c'::'i'::'t'::'i'::Nil
-           | 'i'::'c'::'a'::'l'::Nil      => if (m > 0) 'i'::'c'::Nil else cs
+           | 'i'::'c'::'a'::'l'::Nil      => if (m) 'i'::'c'::Nil else cs
         case 'f'::'u'::'l'::Nil
-           | 'n'::'e'::'s'::'s'::Nil      => if (m > 0) Nil else cs
-        case c::tail                      => c::aux(tail, c::checked)
+           | 'n'::'e'::'s'::'s'::Nil      => if (m) Nil else cs
+        case c::tail                      => 
+          if (!m) c::aux(tail, calcM(c::checked) > 0, c::checked) else c::aux(tail, m, c::checked)
       }
     }
-    aux(cs, Nil)
+    aux(cs, false, Nil)
   }
 
   def step4(cs: List[Char]): List[Char] = {
