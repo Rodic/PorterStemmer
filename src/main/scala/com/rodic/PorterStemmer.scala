@@ -79,29 +79,29 @@ object PorterStemmer {
     def aux(cs: List[Char], m: Int, checked: List[Char]): List[Char] = {
       lazy val m = calcM(checked)
       cs match {
-        case Nil                                             => Nil
-        case 'a'::'t'::'i'::'o'::'n'::'a'::'l'::Nil          => if (m > 0) 'a'::'t'::'e'::Nil else cs
-        case 't'::'i'::'o'::'n'::'a'::'l'::Nil      if m > 0 => 't'::'i'::'o'::'n'::Nil
-        case 'e'::'n'::'c'::'i'::Nil                if m > 0 => 'e'::'n'::'c'::'e'::Nil
-        case 'a'::'n'::'c'::'i'::Nil                if m > 0 => 'a'::'n'::'c'::'e'::Nil
-        case 'i'::'z'::'e'::'r'::Nil                if m > 0 => 'i'::'z'::'e'::Nil
-        case 'b'::'l'::'i'::Nil                     if m > 0 => 'b'::'l'::'e'::Nil
-        case 'a'::'l'::'l'::'i'::Nil                if m > 0 => 'a'::'l'::Nil
-        case 'l'::'o'::'g'::'i'::Nil                if m > 0 => 'l'::'o'::'g'::Nil
-        case 'e'::'n'::'t'::'l'::'i'::Nil           if m > 0 => 'e'::'n'::'t'::Nil
-        case 'e'::'l'::'i'::Nil                     if m > 0 => 'e'::Nil
-        case 'o'::'u'::'s'::'l'::'i'::Nil           if m > 0 => 'o'::'u'::'s'::Nil
-        case 'i'::'z'::'a'::'t'::'i'::'o'::'n'::Nil          => if (m > 0) 'i'::'z'::'e'::Nil else cs
+        case Nil                                    => Nil
+        case 'a'::'t'::'i'::'o'::'n'::'a'::'l'::Nil => if (m > 0) 'a'::'t'::'e'::Nil else cs
+        case 't'::'i'::'o'::'n'::'a'::'l'::Nil      => if (m > 0) 't'::'i'::'o'::'n'::Nil else cs
+        case 'e'::'n'::'c'::'i'::Nil                => if (m > 0) 'e'::'n'::'c'::'e'::Nil else cs
+        case 'a'::'n'::'c'::'i'::Nil                => if (m > 0) 'a'::'n'::'c'::'e'::Nil else cs
+        case 'i'::'z'::'e'::'r'::Nil                => if (m > 0) 'i'::'z'::'e'::Nil else cs
+        case 'b'::'l'::'i'::Nil                     => if (m > 0) 'b'::'l'::'e'::Nil else cs
+        case 'a'::'l'::'l'::'i'::Nil                => if (m > 0) 'a'::'l'::Nil else cs
+        case 'l'::'o'::'g'::'i'::Nil                => if (m > 0) 'l'::'o'::'g'::Nil else cs
+        case 'e'::'n'::'t'::'l'::'i'::Nil           => if (m > 0) 'e'::'n'::'t'::Nil else cs
+        case 'e'::'l'::'i'::Nil                     => if (m > 0) 'e'::Nil else cs
+        case 'o'::'u'::'s'::'l'::'i'::Nil           => if (m > 0) 'o'::'u'::'s'::Nil else cs
+        case 'i'::'z'::'a'::'t'::'i'::'o'::'n'::Nil => if (m > 0) 'i'::'z'::'e'::Nil else cs
         case 'a'::'t'::'i'::'o'::'n'::Nil
-           | 'a'::'t'::'o'::'r'::Nil                if m > 0 => 'a'::'t'::'e'::Nil
-        case 'a'::'l'::'i'::'s'::'m'::Nil           if m > 0 => 'a'::'l'::Nil
-        case 'i'::'v'::'e'::'n'::'e'::'s'::'s'::Nil if m > 0 => 'i'::'v'::'e'::Nil
-        case 'f'::'u'::'l'::'n'::'e'::'s'::'s'::Nil if m > 0 => 'f'::'u'::'l'::Nil
-        case 'o'::'u'::'s'::'n'::'e'::'s'::'s'::Nil if m > 0 => 'o'::'u'::'s'::Nil
-        case 'a'::'l'::'i'::'t'::'i'::Nil           if m > 0 => 'a'::'l'::Nil
-        case 'i'::'v'::'i'::'t'::'i'::Nil           if m > 0 => 'i'::'v'::'e'::Nil
-        case 'b'::'i'::'l'::'i'::'t'::'i'::Nil      if m > 0 => 'b'::'l'::'e'::Nil
-        case c::tail                                         => c::aux(tail, m, c::checked)
+           | 'a'::'t'::'o'::'r'::Nil                => if (m > 0) 'a'::'t'::'e'::Nil else cs
+        case 'a'::'l'::'i'::'s'::'m'::Nil           => if (m > 0) 'a'::'l'::Nil else cs
+        case 'i'::'v'::'e'::'n'::'e'::'s'::'s'::Nil => if (m > 0) 'i'::'v'::'e'::Nil else cs
+        case 'f'::'u'::'l'::'n'::'e'::'s'::'s'::Nil => if (m > 0) 'f'::'u'::'l'::Nil else cs
+        case 'o'::'u'::'s'::'n'::'e'::'s'::'s'::Nil => if (m > 0) 'o'::'u'::'s'::Nil else cs
+        case 'a'::'l'::'i'::'t'::'i'::Nil           => if (m > 0) 'a'::'l'::Nil else cs
+        case 'i'::'v'::'i'::'t'::'i'::Nil           => if (m > 0) 'i'::'v'::'e'::Nil else cs
+        case 'b'::'i'::'l'::'i'::'t'::'i'::Nil      => if (m > 0) 'b'::'l'::'e'::Nil else cs
+        case c::tail                                => c::aux(tail, m, c::checked)
       }
     }
     aux(cs, 0, Nil)
