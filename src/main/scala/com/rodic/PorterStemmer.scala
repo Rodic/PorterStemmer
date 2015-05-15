@@ -76,35 +76,35 @@ object PorterStemmer {
   }
 
   def step2(cs: List[Char]): List[Char] = {
-    def aux(cs: List[Char], m: Int, checked: List[Char]): List[Char] = {
-      lazy val m = calcM(checked)
+    def aux(cs: List[Char], m: Boolean, checked: List[Char]): List[Char] = {
       cs match {
         case Nil                                    => Nil
-        case 'a'::'t'::'i'::'o'::'n'::'a'::'l'::Nil => if (m > 0) 'a'::'t'::'e'::Nil else cs
-        case 't'::'i'::'o'::'n'::'a'::'l'::Nil      => if (m > 0) 't'::'i'::'o'::'n'::Nil else cs
-        case 'e'::'n'::'c'::'i'::Nil                => if (m > 0) 'e'::'n'::'c'::'e'::Nil else cs
-        case 'a'::'n'::'c'::'i'::Nil                => if (m > 0) 'a'::'n'::'c'::'e'::Nil else cs
-        case 'i'::'z'::'e'::'r'::Nil                => if (m > 0) 'i'::'z'::'e'::Nil else cs
-        case 'b'::'l'::'i'::Nil                     => if (m > 0) 'b'::'l'::'e'::Nil else cs
-        case 'a'::'l'::'l'::'i'::Nil                => if (m > 0) 'a'::'l'::Nil else cs
-        case 'l'::'o'::'g'::'i'::Nil                => if (m > 0) 'l'::'o'::'g'::Nil else cs
-        case 'e'::'n'::'t'::'l'::'i'::Nil           => if (m > 0) 'e'::'n'::'t'::Nil else cs
-        case 'e'::'l'::'i'::Nil                     => if (m > 0) 'e'::Nil else cs
-        case 'o'::'u'::'s'::'l'::'i'::Nil           => if (m > 0) 'o'::'u'::'s'::Nil else cs
-        case 'i'::'z'::'a'::'t'::'i'::'o'::'n'::Nil => if (m > 0) 'i'::'z'::'e'::Nil else cs
+        case 'a'::'t'::'i'::'o'::'n'::'a'::'l'::Nil => if (m) 'a'::'t'::'e'::Nil else cs
+        case 't'::'i'::'o'::'n'::'a'::'l'::Nil      => if (m) 't'::'i'::'o'::'n'::Nil else cs
+        case 'e'::'n'::'c'::'i'::Nil                => if (m) 'e'::'n'::'c'::'e'::Nil else cs
+        case 'a'::'n'::'c'::'i'::Nil                => if (m) 'a'::'n'::'c'::'e'::Nil else cs
+        case 'i'::'z'::'e'::'r'::Nil                => if (m) 'i'::'z'::'e'::Nil else cs
+        case 'b'::'l'::'i'::Nil                     => if (m) 'b'::'l'::'e'::Nil else cs
+        case 'a'::'l'::'l'::'i'::Nil                => if (m) 'a'::'l'::Nil else cs
+        case 'l'::'o'::'g'::'i'::Nil                => if (m) 'l'::'o'::'g'::Nil else cs
+        case 'e'::'n'::'t'::'l'::'i'::Nil           => if (m) 'e'::'n'::'t'::Nil else cs
+        case 'e'::'l'::'i'::Nil                     => if (m) 'e'::Nil else cs
+        case 'o'::'u'::'s'::'l'::'i'::Nil           => if (m) 'o'::'u'::'s'::Nil else cs
+        case 'i'::'z'::'a'::'t'::'i'::'o'::'n'::Nil => if (m) 'i'::'z'::'e'::Nil else cs
         case 'a'::'t'::'i'::'o'::'n'::Nil
-           | 'a'::'t'::'o'::'r'::Nil                => if (m > 0) 'a'::'t'::'e'::Nil else cs
-        case 'a'::'l'::'i'::'s'::'m'::Nil           => if (m > 0) 'a'::'l'::Nil else cs
-        case 'i'::'v'::'e'::'n'::'e'::'s'::'s'::Nil => if (m > 0) 'i'::'v'::'e'::Nil else cs
-        case 'f'::'u'::'l'::'n'::'e'::'s'::'s'::Nil => if (m > 0) 'f'::'u'::'l'::Nil else cs
-        case 'o'::'u'::'s'::'n'::'e'::'s'::'s'::Nil => if (m > 0) 'o'::'u'::'s'::Nil else cs
-        case 'a'::'l'::'i'::'t'::'i'::Nil           => if (m > 0) 'a'::'l'::Nil else cs
-        case 'i'::'v'::'i'::'t'::'i'::Nil           => if (m > 0) 'i'::'v'::'e'::Nil else cs
-        case 'b'::'i'::'l'::'i'::'t'::'i'::Nil      => if (m > 0) 'b'::'l'::'e'::Nil else cs
-        case c::tail                                => c::aux(tail, m, c::checked)
+           | 'a'::'t'::'o'::'r'::Nil                => if (m) 'a'::'t'::'e'::Nil else cs
+        case 'a'::'l'::'i'::'s'::'m'::Nil           => if (m) 'a'::'l'::Nil else cs
+        case 'i'::'v'::'e'::'n'::'e'::'s'::'s'::Nil => if (m) 'i'::'v'::'e'::Nil else cs
+        case 'f'::'u'::'l'::'n'::'e'::'s'::'s'::Nil => if (m) 'f'::'u'::'l'::Nil else cs
+        case 'o'::'u'::'s'::'n'::'e'::'s'::'s'::Nil => if (m) 'o'::'u'::'s'::Nil else cs
+        case 'a'::'l'::'i'::'t'::'i'::Nil           => if (m) 'a'::'l'::Nil else cs
+        case 'i'::'v'::'i'::'t'::'i'::Nil           => if (m) 'i'::'v'::'e'::Nil else cs
+        case 'b'::'i'::'l'::'i'::'t'::'i'::Nil      => if (m) 'b'::'l'::'e'::Nil else cs
+        case c::tail                                => 
+          if(!m) c::aux(tail, calcM(c::checked) > 0, c::checked) else c::aux(tail, m, c::checked)
       }
     }
-    aux(cs, 0, Nil)
+    aux(cs, false, Nil)
   }
 
   def step3(cs: List[Char]): List[Char] = {
