@@ -111,15 +111,15 @@ object PorterStemmer {
     def aux(cs: List[Char], checked: List[Char]): List[Char] = {
       lazy val m = calcM(checked)
       cs match {
-        case Nil                                   => Nil
-        case 'i'::'c'::'a'::'t'::'e'::Nil if m > 0 => 'i'::'c'::Nil
-        case 'a'::'t'::'i'::'v'::'e'::Nil if m > 0 => Nil
-        case 'a'::'l'::'i'::'z'::'e'::Nil if m > 0 => 'a'::'l'::Nil
+        case Nil                          => Nil
+        case 'i'::'c'::'a'::'t'::'e'::Nil => if (m > 0) 'i'::'c'::Nil else cs
+        case 'a'::'t'::'i'::'v'::'e'::Nil => if (m > 0) Nil else cs
+        case 'a'::'l'::'i'::'z'::'e'::Nil => if (m > 0) 'a'::'l'::Nil else cs
         case 'i'::'c'::'i'::'t'::'i'::Nil
-           | 'i'::'c'::'a'::'l'::Nil      if m > 0 => 'i'::'c'::Nil
+           | 'i'::'c'::'a'::'l'::Nil      => if (m > 0) 'i'::'c'::Nil else cs
         case 'f'::'u'::'l'::Nil
-           | 'n'::'e'::'s'::'s'::Nil      if m > 0 => Nil
-        case c::tail                               => c::aux(tail, c::checked)
+           | 'n'::'e'::'s'::'s'::Nil      => if (m > 0) Nil else cs
+        case c::tail                      => c::aux(tail, c::checked)
       }
     }
     aux(cs, Nil)
@@ -137,19 +137,19 @@ object PorterStemmer {
            | 'i'::'c'::Nil
            | 'a'::'b'::'l'::'e'::Nil
            | 'i'::'b'::'l'::'e'::Nil
-           | 'a'::'n'::'t'::Nil if m > 1  => Nil
+           | 'a'::'n'::'t'::Nil           => if (m > 1) Nil else cs
         case 'e'::'m'::'e'::'n'::'t'::Nil => if (m > 1) Nil else cs
         case 'm'::'e'::'n'::'t'::Nil      => if (m > 1) Nil else cs
-        case 'e'::'n'::'t'::Nil  if m > 1 => Nil
-        case 'i'::'o'::'n'::Nil 
-          if m > 1 && (checked.head == 't' || checked.head == 's') => Nil
+        case 'e'::'n'::'t'::Nil           => if (m > 1) Nil else cs
+        case 'i'::'o'::'n'::Nil           => 
+          if (m > 1 && (checked.head == 't' || checked.head == 's')) Nil else cs
         case 'o'::'u'::Nil
            | 'i'::'s'::'m'::Nil
            | 'a'::'t'::'e'::Nil
            | 'i'::'t'::'i'::Nil
            | 'o'::'u'::'s'::Nil
            | 'i'::'v'::'e'::Nil
-           | 'i'::'z'::'e'::Nil if m > 1 => Nil
+           | 'i'::'z'::'e'::Nil => if (m > 1) Nil else cs
         case c::tail => c::aux(tail, c::checked)
       }
     }
